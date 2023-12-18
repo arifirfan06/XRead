@@ -5,14 +5,14 @@
  * @format
  */
 
-import React from 'react';
-import type {PropsWithChildren} from 'react';
+import React, { useState } from 'react';
 import {
   SafeAreaView,
   ScrollView,
   StatusBar,
   StyleSheet,
   Text,
+  TouchableOpacity,
   useColorScheme,
   View,
 } from 'react-native';
@@ -24,12 +24,10 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import PDFTest from './screen/test/TestPDF';
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
 
-function Section({children, title}: SectionProps): React.JSX.Element {
+function Section({children, title}) {
   const isDarkMode = useColorScheme() === 'dark';
   return (
     <View style={styles.sectionContainer}>
@@ -55,12 +53,20 @@ function Section({children, title}: SectionProps): React.JSX.Element {
   );
 }
 
-function App(): React.JSX.Element {
+function App() {
   const isDarkMode = useColorScheme() === 'dark';
+  const [mode, setMode] = useState(null)
+  const pressHandler = () => {
+    setMode('pdf')
+  }
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
+
+  if (mode === 'pdf') {
+    return (<><PDFTest/></>)
+  }
 
   return (
     <SafeAreaView style={backgroundStyle}>
@@ -76,6 +82,9 @@ function App(): React.JSX.Element {
           style={{
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
+          <TouchableOpacity onPress={pressHandler}>
+            <Text>CLICK ME ZZZZZZZZZZ!!!</Text>
+          </TouchableOpacity>
           <Section title="Step One">
             Edit <Text style={styles.highlight}>App.tsx</Text> to change this
             screen and then come back to see your edits.

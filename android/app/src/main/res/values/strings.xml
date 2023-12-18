@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">ReadX</string>
+     <!-- <string moduleConfig="true" name="CodePushDeploymentKey">fAs-tFK8Ucse9Fkp9FHNFuquiQxVZfY7Z9YPx</string> -->
 </resources>

@@ -7,11 +7,15 @@
     "ios": "react-native run-ios",
     "lint": "eslint .",
     "start": "react-native start",
-    "test": "jest"
+    "test": "jest",
+    "codepush:apk:prod": "appcenter codepush release-react -a arifirfan06/XRead -d Production"
   },
   "dependencies": {
     "react": "18.2.0",
-    "react-native": "0.73.0"
+    "react-native": "^0.73.0",
+    "react-native-blob-util": "^0.19.6",
+    "react-native-code-push": "^8.1.0",
+    "react-native-pdf": "^6.7.3"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
