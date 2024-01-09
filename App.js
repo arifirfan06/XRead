@@ -1,11 +1,4 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -16,92 +9,82 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {createDrawerNavigator} from '@react-navigation/drawer';
+import 'react-native-gesture-handler';
+import {NavigationContainer} from '@react-navigation/native';
+import BookExploreIndex from './screen/BookRead/BookExplore.index';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
+import PDFView from './screen/BookRead/PDFView';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-import PDFTest from './screen/test/TestPDF';
+const Stack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator();
 
-
-function Section({children, title}) {
-  const isDarkMode = useColorScheme() === 'dark';
+function DrawerNav() {
   return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
+    <Drawer.Navigator
+      screenOptions={{
+        headerStyle: {backgroundColor: '#3d52dd'},
+        headerTintColor: 'white',
+        sceneContainerStyle: {backgroundColor: '#f7f7f7'},
+        drawerContentStyle: {backgroundColor: '#6374e1'},
+        drawerInactiveTintColor: 'white',
+        drawerActiveTintColor: 'white',
+        drawerActiveBackgroundColor: '#8c97df',
+      }}>
+      <Drawer.Screen
+        name="Featured"
+        component={BookExploreIndex}
+        options={{
+          title: 'Spacebird Selection',
+          drawerIcon: ({color, size}) => (
+            <MaterialIcon name="home" size={30} color="#000" />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="Guttenberg"
+        component={BookExploreIndex}
+        options={{
+          title: 'Browse Guttenberg',
+          drawerIcon: ({color, size}) => (
+            <MaterialIcon name="menu-book" size={30} color="#000" />
+          ),
+        }}
+      />
+    </Drawer.Navigator>
   );
 }
 
 function App() {
-  const isDarkMode = useColorScheme() === 'dark';
-  const [mode, setMode] = useState(null)
-  const pressHandler = () => {
-    setMode('pdf')
-  }
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
-  if (mode === 'pdf') {
-    return (<><PDFTest/></>)
-  }
-
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
+    <>
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{
+            headerStyle: {backgroundColor: '#3d52dd'},
+            headerTintColor: 'white',
+            contentStyle: {backgroundColor: '#cccee1'},
           }}>
-          <TouchableOpacity onPress={pressHandler}>
-            <Text>CLICK ME ZZZZZZZZZZ!!!</Text>
-          </TouchableOpacity>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+          <Stack.Screen
+            name="SelectedBooks"
+            component={DrawerNav}
+            options={{
+              // title: "All Categories",
+              headerShown: false,
+              // headerStyle: {backgroundColor: '#351401'},
+              // headerTintColor: 'white',
+              // contentStyle: {backgroundColor: '#3f2f25'}
+            }}
+          />
+          <Stack.Screen
+            name="PDFView"
+            component={PDFView}
+            options={{headerShown: false}}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </>
   );
 }
 
